@@ -72,6 +72,17 @@ func multiLineView() -> UIView {
     return container
 }
 
+func customColorLineView() -> UIView {
+    let color = UIColor(named: "CustomColor")
+    let label = UILabel()
+    label.textColor = color
+    let imageView = UIImageView()
+    let container = setupViews(label: label, imageView: imageView,
+                               withText: "A colour label", symbol: "pencil.tip.crop.circle")
+    container.addConstraint(imageView.centerYAnchor.constraint(equalTo: label.centerYAnchor))
+    return container
+}
+
 func colorLineView() -> UIView {
     let color = UIColor { (trait) -> UIColor in
         switch trait.userInterfaceStyle {
@@ -85,7 +96,7 @@ func colorLineView() -> UIView {
     label.textColor = color
     let imageView = UIImageView()
     let container = setupViews(label: label, imageView: imageView,
-                               withText: "A colour label", symbol: "pencil.tip")
+                               withText: "Another colour label", symbol: "pencil.tip")
     container.addConstraint(imageView.centerYAnchor.constraint(equalTo: label.centerYAnchor))
     return container
 }
@@ -94,6 +105,8 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = .systemBackground
         
         let single = singleLineView()
         view.addSubview(single)
@@ -116,9 +129,16 @@ class ViewController: UIViewController {
         view.addConstraint(multi.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor))
         multi.backgroundColor = .tertiarySystemBackground
         
+        let customColor = customColorLineView()
+        view.addSubview(customColor)
+        view.addConstraint(customColor.topAnchor.constraint(equalToSystemSpacingBelow: multi.bottomAnchor, multiplier: 1.0))
+        view.addConstraint(customColor.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor))
+        view.addConstraint(customColor.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor))
+        customColor.backgroundColor = .tertiarySystemBackground
+        
         let color = colorLineView()
         view.addSubview(color)
-        view.addConstraint(color.topAnchor.constraint(equalToSystemSpacingBelow: multi.bottomAnchor, multiplier: 1.0))
+        view.addConstraint(color.topAnchor.constraint(equalToSystemSpacingBelow: customColor.bottomAnchor, multiplier: 1.0))
         view.addConstraint(color.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor))
         view.addConstraint(color.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor))
         color.backgroundColor = .tertiarySystemBackground
@@ -130,7 +150,7 @@ class ViewController: UIViewController {
         backgroundImage.image = UIImage(named: "image")
         backgroundImage.clipsToBounds = true
         view.addSubview(backgroundImage)
-        view.addConstraint(backgroundImage.topAnchor.constraint(equalTo: bottomView.bottomAnchor))
+        view.addConstraint(backgroundImage.topAnchor.constraint(equalTo: bottomView.bottomAnchor, constant: 20))
         view.addConstraint(backgroundImage.bottomAnchor.constraint(equalTo: view.bottomAnchor))
         view.addConstraint(backgroundImage.leftAnchor.constraint(equalTo: view.leftAnchor))
         view.addConstraint(backgroundImage.rightAnchor.constraint(equalTo: view.rightAnchor))
