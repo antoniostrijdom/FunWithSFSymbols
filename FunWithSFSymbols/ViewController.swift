@@ -162,6 +162,14 @@ class ViewController: UIViewController {
         view.addConstraint(effectView.bottomAnchor.constraint(equalTo: backgroundImage.bottomAnchor))
         view.addConstraint(effectView.leftAnchor.constraint(equalTo: backgroundImage.leftAnchor))
         view.addConstraint(effectView.rightAnchor.constraint(equalTo: backgroundImage.rightAnchor))
+        
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.color = .label
+        effectView.contentView.addSubview(activityIndicator)
+        effectView.contentView.addConstraint(activityIndicator.centerXAnchor.constraint(equalTo: effectView.contentView.centerXAnchor))
+        effectView.contentView.addConstraint(activityIndicator.centerYAnchor.constraint(equalTo: effectView.contentView.centerYAnchor))
+        activityIndicator.startAnimating()
     }
 }
 
